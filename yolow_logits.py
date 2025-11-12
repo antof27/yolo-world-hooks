@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import torch
+import sys 
 from ultralytics import YOLO
 from ultralytics.nn.modules.head import Detect
 
@@ -16,9 +17,14 @@ import cv2
 from PIL import Image
 import json
 
-JSON_OUTPUT_PATH = "logits.json"
-MODEL_PATH = "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/yolov8s-world.pt"
-IMAGE_PATH = "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image"
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+paren_dir = os.path.dirname(current_dir)
+sys.path.append(paren_dir)
+
+JSON_OUTPUT_PATH = os.path.join(current_dir, "logits.json")
+MODEL_PATH = os.path.join(current_dir, "yolov8s-world.pt")
+IMAGE_PATH = os.path.join(current_dir, "image")
 
 class SaveIO:
     """Simple PyTorch hook to save the output of a nn.module."""
@@ -219,8 +225,8 @@ def results_predict(img_path, model, hooks, threshold=0.1, iou=0.7, save_image=F
 
     return boxes
 
-
 # Test function
+
 def main():
     SAVE_TEST_IMG = True
     threshold = 0.1
