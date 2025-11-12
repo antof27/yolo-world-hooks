@@ -52,6 +52,12 @@ def load_and_prepare_model(model_path):
     #     if 'detect' in module_type.lower() or 'head' in module_type.lower():
     #         print(f"  {i}: {module_type}")
     
+
+    #cv2 contains the bbox regression branch, each element in cv2 corresponds to a scale level of the feature
+    #pyramid. cv2 corresponds to bbox embeddings, later processed by distribution focal loss layer
+
+    #cv3 is the classification branch, produces the classification logits or embeddings
+    
     # Find the detection head - support both YOLOv8 (Detect) and YOLO-World (WorldDetect)
     for i, module in enumerate(model.model.modules()):
         # Check if it's a Detect or WorldDetect module
@@ -66,13 +72,14 @@ def load_and_prepare_model(model_path):
                 print(f"  Number of detection layers (nl): {module.nl}")
                 cv2_hooks = [SaveIO() for _ in range(module.nl)]
                 cv3_hooks = [SaveIO() for _ in range(module.nl)]
-                print("cv2 hooks", cv2_hooks)
-                print("cv3 hooks", cv3_hooks)
+              
                 
                 if hasattr(module, 'cv2') and hasattr(module, 'cv3'):
+                    #module contains the cv2 and cv3 specifications
                     for i in range(module.nl):
                         module.cv2[i].register_forward_hook(cv2_hooks[i])
                         module.cv3[i].register_forward_hook(cv3_hooks[i])
+                       
                     print("  Registered hooks to cv2 and cv3 layers")
                 else:
                     print("  WARNING: Module doesn't have cv2/cv3 attributes!")
@@ -109,6 +116,7 @@ def results_predict(img_path, model, hooks, threshold=0.1, iou=0.7, save_image=F
         print(f"  detect_hook.input length: {len(detect_hook.input) if detect_hook.input else 'None'}")
         if detect_hook.input and len(detect_hook.input) > 0:
             print(f"  detect_hook.input[0] type: {type(detect_hook.input[0])}")
+            #basically, detect_hook.input[0] is the first tensor of the list. Each tensor contains information at different scales 
             if isinstance(detect_hook.input[0], (list, tuple)) and len(detect_hook.input[0]) > 0:
                 print(f"  detect_hook.input[0][0] shape: {detect_hook.input[0][0].shape if hasattr(detect_hook.input[0][0], 'shape') else 'no shape'}")
     
@@ -144,11 +152,23 @@ def results_predict(img_path, model, hooks, threshold=0.1, iou=0.7, save_image=F
         print(f"detect_hook.input[0][0] = {detect_hook.input[0][0]}")
         raise
     
+# detect_hook.input → is a tuple
+# detect_hook.input[0] → is a list of FPN feature maps [P3, P4, P5]
+# detect_hook.input[0][0] → the first pyramid feature map tensor, e.g. torch.Size([1, 128, 80, 80]).
+
 
     x = []
     
     for i in range(detect.nl):
-        x.append(torch.cat((cv2_hooks[i].output, cv3_hooks[i].output), 1))
+        print("cv2: : ", cv2_hooks[i].output)
+        x.append(torch.cat((cv2_hooks[i].output, cv3_hooks[i].output), 1)) #thesere are feature maps output from the neck.
+        #concatenating them, we obtain a fused feature map for that specific scale so.
+        #nl 1: cv2 output+cv3 output, nl 2: cv2 output + cv3 output and so on
+        #xi.shape has [batch_size, detect.no, H_i, W_i]
+        # first we keep the shape[0] that is the batch size, 
+        # then we keep the number of detection that are detect.no = 4*16 + 80 = 144 considering 16 as maximum object predicted per cell and 80 classes
+        # we leave -1, transforming H_i, W_i in H_i * W_i
+
     x_cat = torch.cat([xi.view(shape[0], detect.no, -1) for xi in x], 2)
     box, cls = x_cat.split((detect.reg_max * 4, detect.nc), 1)
 
