@@ -24,7 +24,7 @@ for i, module in enumerate(model.model.model):
     print(i, module)
 
 # setup hook
-target_layer = model.model.model[-1].cv4[0][2]
+target_layer = model.model.model[-1].cv4[0][1]
 feature_maps = {}
 
 def hook_fn(module, input, output):
@@ -38,7 +38,6 @@ handle = target_layer.register_forward_hook(hook_fn)
 
 
 
-# Initialize the formatted predictions list
 formatted_predictions = []
 
 
@@ -53,7 +52,7 @@ for image_file in os.listdir(validation_images_path):
         print(f"Error: Could not read image {image_path}")
         continue
 
-    #launch inference
+    #try to launch inference
     try:
         inference_results = model.predict(image, conf=0.1, verbose=False)
     except Exception as e:

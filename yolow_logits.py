@@ -3,7 +3,12 @@ import os
 import torch
 from ultralytics import YOLO
 from ultralytics.nn.modules.head import Detect
-from ultralytics.models.yolo.world.head import WorldDetect
+
+try:
+    from ultralytics.models.yolo.world.head import WorldDetect
+except ImportError:
+    WorldDetect = None
+
 from ultralytics.utils import ops, nms
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
@@ -11,6 +16,9 @@ import cv2
 from PIL import Image
 import json
 
+JSON_OUTPUT_PATH = "logits.json"
+MODEL_PATH = "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/yolov8s-world.pt"
+IMAGE_PATH = "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image"
 
 class SaveIO:
     """Simple PyTorch hook to save the output of a nn.module."""
@@ -195,18 +203,17 @@ def results_predict(img_path, model, hooks, threshold=0.1, iou=0.7, save_image=F
 # Test function
 def main():
     SAVE_TEST_IMG = True
-    model_path = "/home/coloranto/Documents/PhD/yolow_logits/yolov8s-world.pt"
-    img_path = "/home/coloranto/Documents/PhD/yolow_logits/image"
     threshold = 0.1
     nms_threshold = 0.7
 
     print("Loading model...")
-    model, hooks = load_and_prepare_model(model_path)
+    model, hooks = load_and_prepare_model(MODEL_PATH)
     
     print("\nRunning prediction...")
-    results = results_predict(img_path, model, hooks, threshold=threshold, iou=nms_threshold)
+    results = results_predict(IMAGE_PATH, model, hooks, threshold=threshold, iou=nms_threshold)
+    print("results follows: ", results[0])
 
-    with open("logits.json", "w") as j_file:
+    with open(JSON_OUTPUT_PATH, "w") as j_file:
         json.dump(results, j_file,  indent=4)
 
 if __name__ == '__main__':

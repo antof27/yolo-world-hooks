@@ -14,7 +14,7 @@
         ],
         "best_conf": 0.9399082660675049,
         "best_cls": 17.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             4.646385059459135e-05,
             0.000388439919333905,
@@ -195,7 +195,7 @@
         ],
         "best_conf": 0.8610707521438599,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.8610707521438599,
             1.1621531484706793e-05,
@@ -376,7 +376,7 @@
         ],
         "best_conf": 0.7503311038017273,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.7503311038017273,
             8.938819519244134e-05,
@@ -557,7 +557,7 @@
         ],
         "best_conf": 0.691145658493042,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.691145658493042,
             3.2835829188115895e-05,
@@ -738,7 +738,7 @@
         ],
         "best_conf": 0.6622892022132874,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.6622892022132874,
             7.915677088021766e-06,
@@ -919,7 +919,7 @@
         ],
         "best_conf": 0.5507798790931702,
         "best_cls": 25.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.00014040485257282853,
             8.303240974782966e-06,
@@ -1100,7 +1100,7 @@
         ],
         "best_conf": 0.5379856824874878,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.5379856824874878,
             3.378545443410985e-05,
@@ -1281,7 +1281,7 @@
         ],
         "best_conf": 0.5376995205879211,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.5376995205879211,
             0.00013291437062434852,
@@ -1462,7 +1462,7 @@
         ],
         "best_conf": 0.4926000237464905,
         "best_cls": 25.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.0004206614103168249,
             1.1446672942838632e-05,
@@ -1643,7 +1643,7 @@
         ],
         "best_conf": 0.47261902689933777,
         "best_cls": 25.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.000352479110006243,
             4.122690370422788e-05,
@@ -1824,7 +1824,7 @@
         ],
         "best_conf": 0.4259759485721588,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.4259759485721588,
             8.349614290636964e-06,
@@ -2005,7 +2005,7 @@
         ],
         "best_conf": 0.37604767084121704,
         "best_cls": 19.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.01290374156087637,
             8.182548481272534e-05,
@@ -2186,7 +2186,7 @@
         ],
         "best_conf": 0.37570199370384216,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.37570199370384216,
             2.5298342734458856e-05,
@@ -2367,7 +2367,7 @@
         ],
         "best_conf": 0.35587722063064575,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.35587722063064575,
             1.7853342797025107e-05,
@@ -2548,7 +2548,7 @@
         ],
         "best_conf": 0.3296546936035156,
         "best_cls": 25.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.002190961269661784,
             0.00030908946064300835,
@@ -2729,7 +2729,7 @@
         ],
         "best_conf": 0.31859487295150757,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.31859487295150757,
             0.00025547973928041756,
@@ -2910,7 +2910,7 @@
         ],
         "best_conf": 0.2771379351615906,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.2771379351615906,
             0.00028140636277385056,
@@ -3091,7 +3091,7 @@
         ],
         "best_conf": 0.24799150228500366,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.24799150228500366,
             2.947844404843636e-05,
@@ -3272,7 +3272,7 @@
         ],
         "best_conf": 0.24198253452777863,
         "best_cls": 25.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.000197375935385935,
             4.289885691832751e-05,
@@ -3453,7 +3453,7 @@
         ],
         "best_conf": 0.2377392053604126,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.2377392053604126,
             2.7760623197536916e-05,
@@ -3634,7 +3634,7 @@
         ],
         "best_conf": 0.22111770510673523,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.22111770510673523,
             7.861228368710726e-05,
@@ -3815,7 +3815,7 @@
         ],
         "best_conf": 0.21588961780071259,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.21588961780071259,
             4.150393942836672e-05,
@@ -3996,7 +3996,7 @@
         ],
         "best_conf": 0.1824812889099121,
         "best_cls": 25.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.0062861633487045765,
             0.0003840882855001837,
@@ -4177,7 +4177,7 @@
         ],
         "best_conf": 0.1713411659002304,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.1713411659002304,
             0.0001206741580972448,
@@ -4358,7 +4358,7 @@
         ],
         "best_conf": 0.14479437470436096,
         "best_cls": 17.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.008768562227487564,
             0.00018746554269455373,
@@ -4539,7 +4539,7 @@
         ],
         "best_conf": 0.14225144684314728,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.14225144684314728,
             0.0001312878157477826,
@@ -4720,7 +4720,7 @@
         ],
         "best_conf": 0.13854461908340454,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.13854461908340454,
             0.0003360264818184078,
@@ -4901,7 +4901,7 @@
         ],
         "best_conf": 0.13585056364536285,
         "best_cls": 25.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.0011305748485028744,
             0.0008461620309390128,
@@ -5082,7 +5082,7 @@
         ],
         "best_conf": 0.12692777812480927,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.12692777812480927,
             6.516529538203031e-05,
@@ -5263,7 +5263,7 @@
         ],
         "best_conf": 0.1117652878165245,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.1117652878165245,
             7.631104381289333e-05,
@@ -5444,7 +5444,7 @@
         ],
         "best_conf": 0.11119868606328964,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.11119868606328964,
             0.00013637090160045773,
@@ -5625,7 +5625,7 @@
         ],
         "best_conf": 0.10448232293128967,
         "best_cls": 0.0,
-        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/image",
+        "image_id": "/home/coloranto/Documents/PhD/yolow_logits/yolo-world-hooks/image",
         "activations": [
             0.10448232293128967,
             0.00012633342703338712,
