@@ -13,25 +13,15 @@ sys.path.append(parent_dir)
 
 
 
-JSON_OUTPUT_PATH = os.path.join(current_dir, "yolow_embeddings.json")
+PT_OUTPUT_PATH = os.path.join(current_dir, "yolow_local_embeddings.pt")
 MODEL_PATH = os.path.join(current_dir, "yolov8s-world.pt")
 IMAGE_PATH = os.path.join(current_dir, "image")
 
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 model = YOLO(MODEL_PATH).to(device)
-feature_maps = {}
 
-
-def hook_fn(module, input, output):
-    # Save the output feature map
-    if isinstance(output, tuple):
-        feature_maps["feat"] = output[0].detach().cpu()
-    else:
-        feature_maps["feat"] = output.detach().cpu()
-
-
-
-image_embeddings = []
+embeddings_list = []
+filename_list = []
 
 # --- Loop over images ---
 for image_file in os.listdir(IMAGE_PATH):
@@ -51,24 +41,25 @@ for image_file in os.listdir(IMAGE_PATH):
         # YOLO embed expects list of images
         embeddings = model.embed([image_rgb], device=device)
         # Convert tensor to list
-        global_embedding = embeddings[0].cpu().tolist()
-        print("len", len(global_embedding))
+        local_embedding = embeddings[0].cpu()
+        print("len", len(local_embedding))
+
+        embeddings_list.append(local_embedding)
+        filename_list.append(image_file)
     except Exception as e:
         print(f"Error embedding {image_file}: {e}")
-        global_embedding = []
+        continue
 
-    # --- Store in JSON format ---
-    image_embeddings.append({
-        "image_file": image_file,
-        "global_embedding": global_embedding
-    })
 
 
 try:
-    with open(JSON_OUTPUT_PATH, 'w') as f:
-        json.dump(image_embeddings, f, indent=4)
-    print(f"Success! Global embeddings saved to {JSON_OUTPUT_PATH}")
+    embeddings_tensor = torch.stack(embeddings_list)
+
+    torch.save({
+        "filenames": filename_list,
+        "local_embeddings": embeddings_tensor
+    }, PT_OUTPUT_PATH)
+
+    print(f"Saved embeddings to {PT_OUTPUT_PATH}")
 except Exception as e:
-    print(f"Error saving JSON: {e}")
-
-
+    print(f"Error saving embeddings: {e}")

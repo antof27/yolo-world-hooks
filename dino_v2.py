@@ -1,30 +1,35 @@
 # pip install torchao
 import torch
-from transformers import AutoImageProcessor, AutoModel
-from transformers.image_utils import load_image
+from transformers import AutoImageProcessor, AutoModel, AutoModelForImageClassification
 import numpy as np
+from transformers.image_utils import load_image
 import os 
 from PIL import Image
 
 
 IMG_PATH = "/storage/team/EgoTracksFull/v2/yolo-world-hooks/image"
-OUTPUT_JSON = "/dino_v3_output.json"
+OUTPUT_JSON = "dino_v3_output.json"
+MODEL_NAME = "facebook/dinov2-vits8"
 
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
-processor = AutoImageProcessor.from_pretrained("facebook/dinov3-vith16plus-pretrain-lvd1689m")
-model = AutoModel.from_pretrained("facebook/dinov3-vith16plus-pretrain-lvd1689m")
+processor = AutoImageProcessor.from_pretrained('facebook/dinov2-giant-imagenet1k-1-layer')
+
+model = AutoModelForImageClassification.from_pretrained(
+    'facebook/dinov2-giant-imagenet1k-1-layer',
+    dtype=torch.bfloat16,
+    device_map="auto",
+)
 
 def get_global_embeddings(image_path):
     image = Image.open(image_path).convert("RGB")
     inputs = processor(images=image, return_tensors="pt").to(model.device)
-    with torch.inference_mode():
+    with torch.no_grad():
         outputs = model(**inputs)
 
     # pooler_output is a single vector representing the image, then we remove batch dimension and convert to list
-    pooled_output = outputs.pooler_output
-    print("Pooled output shape:", pooled_output.shape)
-    return pooled_output
+    embeggings = outputs.pooler_output.cpu().squeeze().tolist()
+    return embeggings
 
 
 

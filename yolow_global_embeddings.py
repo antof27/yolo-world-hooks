@@ -1,6 +1,5 @@
 import os
 import cv2
-import json
 import torch
 import numpy as np
 from ultralytics import YOLO
@@ -11,9 +10,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
-
-
-JSON_OUTPUT_PATH = os.path.join(current_dir, "yolow_embeddings.json")
+# Changed to .pt extension
+PT_OUTPUT_PATH = os.path.join(current_dir, "yolow_embeddings.pt")
 MODEL_PATH = os.path.join(current_dir, "yolov8s-world.pt")
 IMAGE_PATH = os.path.join(current_dir, "image")
 
@@ -30,8 +28,9 @@ def hook_fn(module, input, output):
         feature_maps["feat"] = output.detach().cpu()
 
 
-
-image_embeddings = []
+# Store embeddings as tensors and filenames separately
+embeddings_list = []
+filenames_list = []
 
 # --- Loop over images ---
 for image_file in os.listdir(IMAGE_PATH):
@@ -50,25 +49,29 @@ for image_file in os.listdir(IMAGE_PATH):
     try:
         # YOLO embed expects list of images
         embeddings = model.embed([image_rgb], device=device)
-        # Convert tensor to list
-        global_embedding = embeddings[0].cpu().tolist()
-        print("len", len(global_embedding))
+        # Keep as tensor (move to CPU for storage)
+        global_embedding = embeddings[0].cpu()
+        print("Shape:", global_embedding.shape)
+        
+        embeddings_list.append(global_embedding)
+        filenames_list.append(image_file)
     except Exception as e:
         print(f"Error embedding {image_file}: {e}")
-        global_embedding = []
-
-    # --- Store in JSON format ---
-    image_embeddings.append({
-        "image_file": image_file,
-        "global_embedding": global_embedding
-    })
+        continue
 
 
+# --- Save as PyTorch file ---
 try:
-    with open(JSON_OUTPUT_PATH, 'w') as f:
-        json.dump(image_embeddings, f, indent=4)
-    print(f"Success! Global embeddings saved to {JSON_OUTPUT_PATH}")
+    # Stack embeddings into a single tensor
+    embeddings_tensor = torch.stack(embeddings_list)
+    
+    # Save both embeddings and filenames
+    torch.save({
+        'embeddings': embeddings_tensor,
+        'filenames': filenames_list
+    }, PT_OUTPUT_PATH)
+    
+    print(f"Success! Global embeddings saved to {PT_OUTPUT_PATH}")
+    print(f"Saved {len(filenames_list)} embeddings with shape {embeddings_tensor.shape}")
 except Exception as e:
-    print(f"Error saving JSON: {e}")
-
-
+    print(f"Error saving .pt file: {e}")
