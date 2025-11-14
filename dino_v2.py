@@ -8,7 +8,7 @@ from PIL import Image
 
 
 IMG_PATH = "/storage/team/EgoTracksFull/v2/yolo-world-hooks/image"
-OUTPUT_JSON = "dino_v3_output.json"
+OUTPUT_JSON = "dino_v2_output.json"
 MODEL_NAME = "facebook/dinov2-vits8"
 
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'

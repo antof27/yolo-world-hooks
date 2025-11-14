@@ -14,7 +14,7 @@ sys.path.append(parent_dir)
 
 
 PT_OUTPUT_PATH = os.path.join(current_dir, "yolow_local_embeddings.pt")
-MODEL_PATH = os.path.join(current_dir, "yolov8s-world.pt")
+MODEL_PATH = os.path.join(current_dir, "checkpoints/yolov8s-world.pt")
 IMAGE_PATH = os.path.join(current_dir, "image")
 
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'

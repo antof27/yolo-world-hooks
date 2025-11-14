@@ -15,14 +15,14 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import cv2
 from PIL import Image
-import json
 
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 paren_dir = os.path.dirname(current_dir)
 sys.path.append(paren_dir)
 
-JSON_OUTPUT_PATH = os.path.join(current_dir, "logits.json")
+# Changed to .pt extension
+PT_OUTPUT_PATH = os.path.join(current_dir, "logits.pt")
 MODEL_PATH = os.path.join(current_dir, "yolov8s-world.pt")
 IMAGE_PATH = os.path.join(current_dir, "image")
 
@@ -193,10 +193,10 @@ def results_predict(img_path, model, hooks, threshold=0.1, iou=0.7, save_image=F
         
         boxes.append({
             'image_id': img_path,
-            'bbox': [x0.item(), y0.item(), x1.item(), y1.item()],
-            'bbox_xywh': [(x0.item() + x1.item())/2, (y0.item() + y1.item())/2, x1.item() - x0.item(), y1.item() - y0.item()],
-            'logits': logits.cpu().tolist(),
-            'activations': [p.item() for p in class_probs_after_sigmoid]
+            'bbox': torch.tensor([x0.item(), y0.item(), x1.item(), y1.item()]),
+            'bbox_xywh': torch.tensor([(x0.item() + x1.item())/2, (y0.item() + y1.item())/2, x1.item() - x0.item(), y1.item() - y0.item()]),
+            'logits': logits.cpu(),
+            'activations': torch.tensor([p.item() for p in class_probs_after_sigmoid])
         })
 
     # NMS
@@ -213,13 +213,13 @@ def results_predict(img_path, model, hooks, threshold=0.1, iou=0.7, save_image=F
         activations = acts_and_logits[:detect.nc]
         logits = acts_and_logits[detect.nc:]
         box_dict = {
-            'bbox': [x0.item(), y0.item(), x1.item(), y1.item()],
-            'bbox_xywh': [(x0.item() + x1.item())/2, (y0.item() + y1.item())/2, x1.item() - x0.item(), y1.item() - y0.item()],
+            'bbox': torch.tensor([x0.item(), y0.item(), x1.item(), y1.item()]),
+            'bbox_xywh': torch.tensor([(x0.item() + x1.item())/2, (y0.item() + y1.item())/2, x1.item() - x0.item(), y1.item() - y0.item()]),
             'best_conf': conf.item(),
             'best_cls': cls.item(),
             'image_id': img_path,
-            'activations': [p.item() for p in activations],
-            'logits': [p.item() for p in logits]
+            'activations': torch.tensor([p.item() for p in activations]),
+            'logits': torch.tensor([p.item() for p in logits])
         }
         boxes.append(box_dict)
 
@@ -239,8 +239,32 @@ def main():
     results = results_predict(IMAGE_PATH, model, hooks, threshold=threshold, iou=nms_threshold)
     print("results follows: ", results[0])
 
-    with open(JSON_OUTPUT_PATH, "w") as j_file:
-        json.dump(results, j_file,  indent=4)
+    # Convert results to tensor-friendly format
+    try:
+        # Extract data into separate lists
+        bboxes = torch.stack([box['bbox'] for box in results])
+        bboxes_xywh = torch.stack([box['bbox_xywh'] for box in results])
+        best_confs = torch.tensor([box['best_conf'] for box in results])
+        best_cls = torch.tensor([box['best_cls'] for box in results])
+        image_ids = [box['image_id'] for box in results]
+        activations = torch.stack([box['activations'] for box in results])
+        logits = torch.stack([box['logits'] for box in results])
+        
+        torch.save({
+            'bboxes': bboxes,
+            'bboxes_xywh': bboxes_xywh,
+            'best_confs': best_confs,
+            'best_cls': best_cls,
+            'image_ids': image_ids,
+            'activations': activations,
+            'logits': logits
+        }, PT_OUTPUT_PATH)
+        
+        print(f"\nSuccess! Logits saved to {PT_OUTPUT_PATH}")
+        print(f"Saved {len(results)} detections")
+        print(f"Shapes: bboxes={bboxes.shape}, logits={logits.shape}, activations={activations.shape}")
+    except Exception as e:
+        print(f"Error saving .pt file: {e}")
 
 if __name__ == '__main__':
     main()
