@@ -1,2 +1,4 @@
 *.pt
 output_files/*.pt
+yolo_gt_embeddings/*.pt
+yolo_predicted_embeddings/*.pt
