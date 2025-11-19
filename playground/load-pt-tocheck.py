@@ -5,6 +5,8 @@ data2 = torch.load("/storage/team/EgoTracksFull/v2/yolo-world-hooks/playground/p
 
 data3 = torch.load("/storage/team/EgoTracksFull/v2/yolo-world-hooks/playground/gt_converted/0a6ba0bd-d880-4a50-92e0-b1b3df278547.pt")
 
+dino = torch.load("/storage/team/EgoTracksFull/v2/yolo-world-hooks/playground/dino_converted/0a6ba0bd-d880-4a50-92e0-b1b3df278547.pt")
+
 print(data1.keys())
 
 len1 = len(data1["object_ids"])
@@ -29,12 +31,15 @@ print(len(data1["bboxes"]))
 
 
 # print the first 5 values of all the keys in data1 except embeddings
-for key in data1.keys():
-    if key != "embeddings":
-        print(f"{key}: {data1[key][:10]}")
+# for key in data1.keys():
+#     if key != "embeddings":
+#         print(f"{key}: {data1[key][:10]}")
 
 # print the first 5 for data3
 for key in data3.keys():
-    if key != "embeddings":
-        print(f"{key}: {data3[key][:10]}")
+    if key == "classes":
+        print(f"{key}: {data3[key][:100]}")
 
+
+print("DINO embeddings", dino.keys())
+print(dino["object_ids"][:10])
